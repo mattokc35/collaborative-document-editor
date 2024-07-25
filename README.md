@@ -25,6 +25,18 @@ To set up the self-contained SQLite database, run:
 npm run init-db
 ```
 
+You will need a secret key to handle user authentication in the backend. Generate one using:
+
+```
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
+
+Next, in the /backend folder, create a `.env` file and put the secret key inside it:
+
+```
+ACCESS_TOKEN_SECRET=your_generated_secret_key
+```
+
 Now, start up the backend server by running:
 
 ```
