@@ -1,6 +1,6 @@
 # React + TypeScript + Vite
 
-I used React, TypeScript, Vite, WebSockets, MaterialUI, ReactQuill, Node.js, Express, and JWT for this project.
+I used React, TypeScript, Vite, WebSockets, MaterialUI, ReactQuill, Node.js, Express, SQLite, and JWT for this project.
 
 
 ## Setup
