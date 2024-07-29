@@ -61,11 +61,11 @@ const Dashboard: React.FC = () => {
         const response = await createDocument(newDocumentTitle, authData);
         if (response && response.documentId) {
           setSuccessMessage("Document created successfully");
-          setNewDocumentTitle(""); //clear the title input after creation
+          setNewDocumentTitle("");
           setDocuments((prev) => [
             ...prev,
             { id: response.documentId, title: newDocumentTitle },
-          ]); //add the new document to the list
+          ]);
           navigate(`/document/${response.documentId}`);
         } else {
           setErrorMessage("Unexpected response format");

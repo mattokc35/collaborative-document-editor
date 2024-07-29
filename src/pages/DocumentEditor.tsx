@@ -18,7 +18,7 @@ import {
   getUserByUsername,
 } from "../network/networkRequests";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import "react-quill/dist/quill.snow.css";
 
 const DocumentEditor: React.FC = () => {
   const [content, setContent] = useState<string>("");
@@ -47,7 +47,6 @@ const DocumentEditor: React.FC = () => {
           setContent(content);
           setDocumentTitle(title);
 
-          // Fetch the users who have access to this document
           const users = await getSharedUsers(documentId!, authData);
           setSharedUsers(users.map((user: any) => user.username));
         }
@@ -88,18 +87,15 @@ const DocumentEditor: React.FC = () => {
     }
     try {
       if (authData) {
-        // Fetch the user by username to get the user ID
         const userResponse = await getUserByUsername(shareUserName, authData);
         const userId = userResponse.id;
 
-        // Share the document with the user
         await shareDocument(documentId!, userId, authData);
 
-        setShareUserName(""); // Clear input field
-        setShareError(null); // Clear any previous errors
+        setShareUserName("");
+        setShareError(null);
         setShareSuccess("Document shared successfully");
 
-        // Update shared users list
         setSharedUsers((prev) => [...prev, shareUserName]);
       }
     } catch (error) {
@@ -124,7 +120,7 @@ const DocumentEditor: React.FC = () => {
           onChange={handleChange}
           placeholder="Edit document..."
           theme="snow"
-          style={{ height: "400px" }} // Adjust height as needed
+          style={{ height: "400px" }}
         />
       </Box>
       <Box sx={{ mb: 3, mt: 7 }}>

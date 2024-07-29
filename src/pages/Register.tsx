@@ -27,7 +27,7 @@ const Register: React.FC = () => {
       setSuccess("Registration successful! Redirecting to login...");
       setTimeout(() => {
         navigate("/login");
-      }, 1000); //delay to show success message
+      }, 1000);
     } catch (error) {
       console.error("Registration failed", error);
       setError("Registration failed. Please try again.");
