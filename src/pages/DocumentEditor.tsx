@@ -1,14 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  List,
-  ListItem,
-  Alert,
-} from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
+import { TextField, Button, Typography, Box, List, Alert } from "@mui/material";
 import AuthContext from "../context/AuthContext";
 import useWebSocket from "../hooks/useWebSocket";
 import {
@@ -19,6 +11,7 @@ import {
 } from "../network/networkRequests";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { StyledListItem } from "../components/styled/styledComponents";
 
 const DocumentEditor: React.FC = () => {
   const [content, setContent] = useState<string>("");
@@ -32,6 +25,7 @@ const DocumentEditor: React.FC = () => {
   const { ws, status, error, sendMessage } = useWebSocket(
     "ws://localhost:5001"
   );
+  const navigate = useNavigate();
 
   if (!authContext) {
     throw new Error("AuthContext must be used within an AuthProvider");
@@ -109,6 +103,10 @@ const DocumentEditor: React.FC = () => {
     return <Alert severity="error">Error: {error}</Alert>;
   }
 
+  const handleLogout = () => {
+    navigate("/logout");
+  };
+
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h4" gutterBottom sx={{ textAlign: "center", mb: 2 }}>
@@ -151,12 +149,20 @@ const DocumentEditor: React.FC = () => {
         <Typography variant="h6" gutterBottom>
           Shared With:
         </Typography>
-        <List>
+        <List sx={{ display: "flex" }}>
           {sharedUsers.map((user, index) => (
-            <ListItem key={index}>{user}</ListItem>
+            <StyledListItem key={index}>{user}</StyledListItem>
           ))}
         </List>
       </Box>
+      <Button
+        variant="contained"
+        color="error"
+        onClick={handleLogout}
+        sx={{ mb: 2, mt: 2 }}
+      >
+        Logout
+      </Button>
     </Box>
   );
 };

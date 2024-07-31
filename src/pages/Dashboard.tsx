@@ -102,6 +102,10 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const handleLogout = () => {
+    navigate("/logout");
+  };
+
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ padding: 3 }}>
@@ -125,6 +129,7 @@ const Dashboard: React.FC = () => {
             Create Document
           </Button>
         </Box>
+
         {successMessage && (
           <Alert severity="success" sx={{ mb: 2 }}>
             {successMessage}
@@ -162,6 +167,14 @@ const Dashboard: React.FC = () => {
             </ListItem>
           ))}
         </List>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={handleLogout}
+          sx={{ mb: 2 }}
+        >
+          Logout
+        </Button>
       </Paper>
     </Container>
   );
