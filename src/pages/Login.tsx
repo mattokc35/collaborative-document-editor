@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -10,7 +10,6 @@ import {
   Alert,
 } from "@mui/material";
 import { login } from "../network/networkRequests";
-import AuthContext from "../context/AuthContext";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -18,27 +17,21 @@ const Login: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
-  const authContext = useContext(AuthContext);
-
-  if (!authContext) {
-    throw new Error("AuthContext must be used within an AuthProvider");
-  }
-
-  const { setAuthData } = authContext;
 
   const handleLogin = async () => {
     setError(null);
     setSuccess(null);
     try {
       const response = await login(username, password);
-      debugger;
+
       //store the token in local storage
-      localStorage.setItem("authToken", response.token);
-      setAuthData(response.token);
+      localStorage.setItem("token", response.token);
 
       //set success message and redirect
       setSuccess("Login successful! Redirecting...");
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1000); //delay to show success message
     } catch (error) {
       console.error("Failed to log in", error);
       setError("Login failed. Please check your username and password.");
@@ -107,12 +100,6 @@ const Login: React.FC = () => {
           >
             Login
           </Button>
-          <Box sx={{ mt: 2, textAlign: "center" }}>
-            <Typography variant="body2">
-              Don't have an account?{" "}
-              <RouterLink to="/register">Click here to register</RouterLink>
-            </Typography>
-          </Box>
         </Box>
       </Paper>
     </Container>
