@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
     throw new Error("AuthContext must be used within an AuthProvider");
   }
 
-  const { authData } = authContext;
+  const { authData, setAuthData } = authContext;
 
   useEffect(() => {
     const fetchDocuments = async () => {
@@ -102,6 +102,11 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const handleLogout = () => {
+    setAuthData(null);
+    navigate("/login");
+  };
+
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ padding: 3 }}>
@@ -162,6 +167,14 @@ const Dashboard: React.FC = () => {
             </ListItem>
           ))}
         </List>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={handleLogout}
+          sx={{ mb: 2 }}
+        >
+          Logout
+        </Button>
       </Paper>
     </Container>
   );

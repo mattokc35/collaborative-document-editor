@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   TextField,
   Button,
@@ -29,6 +29,7 @@ const DocumentEditor: React.FC = () => {
   const [sharedUsers, setSharedUsers] = useState<string[]>([]);
   const authContext = useContext(AuthContext);
   const { documentId } = useParams<{ documentId: string }>();
+  const navigate = useNavigate();
   const { ws, status, error, sendMessage } = useWebSocket(
     "ws://localhost:5001"
   );
@@ -37,7 +38,7 @@ const DocumentEditor: React.FC = () => {
     throw new Error("AuthContext must be used within an AuthProvider");
   }
 
-  const { authData } = authContext;
+  const { authData, setAuthData } = authContext;
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -105,6 +106,11 @@ const DocumentEditor: React.FC = () => {
     }
   };
 
+  const handleLogout = () => {
+    setAuthData(null);
+    navigate("/login");
+  };
+
   if (status === "ERROR") {
     return <Alert severity="error">Error: {error}</Alert>;
   }
@@ -156,6 +162,14 @@ const DocumentEditor: React.FC = () => {
             <ListItem key={index}>{user}</ListItem>
           ))}
         </List>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={handleLogout}
+          sx={{ mb: 2 }}
+        >
+          Logout
+        </Button>
       </Box>
     </Box>
   );
