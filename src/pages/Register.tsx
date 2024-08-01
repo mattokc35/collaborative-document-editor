@@ -10,6 +10,7 @@ import {
   Box,
   Alert,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -101,6 +102,9 @@ const Register: React.FC = () => {
             Register
           </Button>
         </Box>
+        <Typography variant="body2" sx={{ mt: 2 }}>
+          Have an account already? <Link to="/login">Click here to login</Link>
+        </Typography>
       </Paper>
     </Container>
   );

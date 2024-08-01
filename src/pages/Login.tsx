@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -101,6 +101,10 @@ const Login: React.FC = () => {
             Login
           </Button>
         </Box>
+        <Typography variant="body2" sx={{ mt: 2 }}>
+          Don't have an account?{" "}
+          <Link to="/register"> Click here to register </Link>
+        </Typography>
       </Paper>
     </Container>
   );
